@@ -5,8 +5,16 @@ let hasJBlackJack = false
 let isAlive = false
 let message = ""
 let messageEl = document.getElementById("message-el")
-let sumEl = document.getElementById("#sum-el")
+let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
+
+let player = {
+    name: "Per",
+    chips: 145
+}
+
+let playerEl = document.getElementById("player-el")
+playerEl.textContent = player.name + ": $" + player.chips
 
 function startGame() {
     isAlive = true
@@ -18,6 +26,10 @@ function startGame() {
 
     sum = firstCard + secondCard;
     renderGame()
+}
+
+function gameOver() {
+    document.getElementById("start-btn").textContent = "RESTART GAME"
 }
 
 function renderGame() {
@@ -32,9 +44,11 @@ function renderGame() {
     } else if (sum === 21) {
         message = "Wohoo! You've got Blackjack!"
         hasJBlackJack = true
+        gameOver()
     } else {
         message = "You're out of the game!"
         isAlive = false
+        gameOver()
     }    
     messageEl.textContent = message
 }
@@ -45,7 +59,7 @@ function newCard() {
         sum += card
         cards.push(card)
         renderGame()
-    }
+    } 
 }
 
 function getRandomCard() {
