@@ -8,6 +8,7 @@ let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 let buttonStartEl = document.getElementById("start-btn")
+let buttonNewCardEl = document.getElementById("new-card-btn")
 
 let player = {
     name: "Per",
@@ -20,7 +21,7 @@ playerEl.textContent = player.name + ": $" + player.chips
 function startGame() {
     if (document.getElementById("start-btn").textContent === "CLEAN BOARD") {
         cards = []
-        sum = ""     
+        sum = ""            
         renderGame(true)  
     }
     else {
@@ -33,6 +34,8 @@ function startGame() {
         cards.push(secondCard)
 
         sum = firstCard + secondCard;
+        buttonStartEl.disabled = true
+        buttonNewCardEl.disabled = false
         renderGame(false)
     }
     
@@ -40,6 +43,9 @@ function startGame() {
 
 function gameOver() {
     buttonStartEl.textContent = "CLEAN BOARD"
+    buttonStartEl.disabled = false
+    buttonNewCardEl.disabled = true
+    
 }
 
 function renderGame(restarted) {
