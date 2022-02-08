@@ -7,6 +7,7 @@ let message = ""
 let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
+let buttonStartEl = document.getElementById("start-btn")
 
 let player = {
     name: "Per",
@@ -17,39 +18,53 @@ let playerEl = document.getElementById("player-el")
 playerEl.textContent = player.name + ": $" + player.chips
 
 function startGame() {
-    isAlive = true
-    let firstCard = getRandomCard()
-    let secondCard = getRandomCard()
+    if (document.getElementById("start-btn").textContent === "CLEAN BOARD") {
+        cards = []
+        sum = ""     
+        renderGame(true)  
+    }
+    else {
+        isAlive = true
+        hasJBlackJack = false
+        let firstCard = getRandomCard()
+        let secondCard = getRandomCard()
 
-    cards.push(firstCard)
-    cards.push(secondCard)
+        cards.push(firstCard)
+        cards.push(secondCard)
 
-    sum = firstCard + secondCard;
-    renderGame()
+        sum = firstCard + secondCard;
+        renderGame(false)
+    }
+    
 }
 
 function gameOver() {
-    document.getElementById("start-btn").textContent = "RESTART GAME"
+    buttonStartEl.textContent = "CLEAN BOARD"
 }
 
-function renderGame() {
+function renderGame(restarted) {
     cardsEl.textContent = "Cards: "
     for (let i = 0; i < cards.length; i++) {
         cardsEl.textContent += cards[i] + " "        
     }
     sumEl.textContent = "Sum: " + sum    
-
-    if (sum < 21) {
-        message = "Do you want to draw a new card?"
-    } else if (sum === 21) {
-        message = "Wohoo! You've got Blackjack!"
-        hasJBlackJack = true
-        gameOver()
-    } else {
-        message = "You're out of the game!"
-        isAlive = false
-        gameOver()
-    }    
+    if (restarted) {
+        message = "Want to play round?"
+        buttonStartEl.textContent = "START GAME"
+    }
+    else {
+        if (sum < 21) {
+            message = "Do you want to draw a new card?"
+        } else if (sum === 21) {
+            message = "Wohoo! You've got Blackjack!"
+            hasJBlackJack = true
+            gameOver()
+        } else {
+            message = "You're out of the game!"
+            isAlive = false
+            gameOver()
+        }
+    }
     messageEl.textContent = message
 }
 
@@ -58,7 +73,7 @@ function newCard() {
         let card = getRandomCard()
         sum += card
         cards.push(card)
-        renderGame()
+        renderGame(false)
     } 
 }
 
