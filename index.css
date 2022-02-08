@@ -23,6 +23,8 @@ button {
     font-weight: bold;
     padding-top: 5px;
     padding-bottom: 5px;
+    margin-bottom: 3px;
+    margin-top: 3px;
     border: none;
     border-radius: 5px;
 }
